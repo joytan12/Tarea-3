@@ -1,24 +1,26 @@
-# 🌐 Tarea 3 · Frontend Básico Conectado a una API REST
+# 📱 Tarea 3 · Frontend en React Native Conectado a API REST
 
-Frontend ligero, limpio y moderno desarrollado en **HTML5, CSS3 y JavaScript estándar (Vanilla JS)**, diseñado para conectarse y consumir servicios de una API REST mediante operaciones HTTP asíncronas (`fetch`).
+Aplicación frontend construida con **React Native** y **Expo (con soporte Web)**, diseñada para consumir e interactuar con servicios de una API REST mediante operaciones HTTP asíncronas (`fetch`) y desplegarse automáticamente en **Vercel** usando **GitHub Actions**.
 
 ---
 
-## 📋 Características Principales
+## 📋 Características
 
-- **Sin dependencias ni librerías externas**: No requiere instalar paquetes de Node (`npm`), herramientas de compilación ni servidores complejos. Abre directamente en el navegador.
-- **Operaciones CRUD Completas**:
-  - **GET**: Carga y visualiza los registros desde la API con indicador de carga (*spinner*).
-  - **POST**: Formulario interactivo para enviar y crear nuevos registros en la API.
-  - **PUT**: Edición de registros existentes directamente en la interfaz y sincronización con la API.
-  - **DELETE**: Eliminación de registros con diálogo de confirmación y actualización del estado.
-- **Buscador y Filtro en Tiempo Real**: Permite filtrar los registros descargados por título o contenido de manera instantánea.
-- **Configuración de Endpoint Flexible**:
-  - Viene configurado por defecto con la API pública de pruebas **JSONPlaceholder** (`https://jsonplaceholder.typicode.com/posts`), lista para funcionar de inmediato sin necesidad de levantar un backend propio.
-  - Botones de preajuste rápido (Posts, Todos, Localhost).
-  - Campo editable para ingresar cualquier URL de API propia o local (por ejemplo, `http://localhost:5000/api/tasks`).
-- **Monitor HTTP en Pantalla**: Muestra en tiempo real el método HTTP utilizado (`GET`, `POST`, `PUT`, `DELETE`), el código de estado (`200 OK`, `201 Created`), el tiempo de respuesta en milisegundos y el JSON devuelto.
-- **Notificaciones Dinámicas (Toast)**: Alertas visuales flotantes de éxito, error e información para cada acción realizada.
+- **Construido 100% en React Native**:
+  - Componentes nativos: `View`, `Text`, `FlatList`, `TextInput`, `TouchableOpacity`, `ActivityIndicator`, `SafeAreaView`, `StyleSheet`.
+  - Multiplataforma: Corre en **Web**, **Android** e **iOS**.
+- **Operaciones CRUD con API REST**:
+  - **GET**: Carga y renderizado dinámico de elementos con `FlatList`.
+  - **POST**: Formulario integrado para crear nuevos registros en la API.
+  - **PUT**: Edición interactiva de registros existentes.
+  - **DELETE**: Eliminación de registros con actualización reactiva en pantalla.
+- **Buscador en tiempo real**: Filtrado instantáneo por título o contenido.
+- **Configuración de Endpoints**:
+  - Selector y campo editable de URL de API.
+  - Preajustes rápidos para *JSONPlaceholder* (Posts, Todos) y *FakeStore API* (Productos).
+- **Consola de Monitoreo HTTP**: Registra en vivo el método (`GET`, `POST`, `PUT`, `DELETE`), status code HTTP, latencia (ms) y el JSON devuelto.
+- **CI/CD Automatizado con GitHub Actions para Vercel**:
+  - En cada `push` a la rama `main`, GitHub Actions compila la versión web estática con Expo (`npx expo export --platform web`) y la despliega automáticamente a producción en **Vercel**.
 
 ---
 
@@ -27,42 +29,54 @@ Frontend ligero, limpio y moderno desarrollado en **HTML5, CSS3 y JavaScript est
 ```text
 Tarea-3/
 │
-├── index.html        # Estructura semántica y componentes de la interfaz
-├── styles.css        # Diseño responsivo, variables CSS y estilos modernos
-├── app.js            # Lógica de conexión con la API, peticiones fetch y manejo del DOM
-└── README.md         # Documentación de la tarea y guía de uso
+├── App.js                     # Componente principal de React Native
+├── index.js                   # Punto de entrada de Expo (registerRootComponent)
+├── app.json                   # Configuración del proyecto Expo
+├── package.json               # Dependencias y scripts de ejecución
+├── .gitignore                 # Archivos ignorados por git (node_modules, dist, etc.)
+│
+├── .github/
+│   └── workflows/
+│       └── deploy-vercel.yml  # Pipeline CI/CD de GitHub Actions para Vercel
+│
+├── assets/                    # Íconos y recursos visuales
+└── README.md                  # Documentación
 ```
 
 ---
 
-## 🚀 Cómo Ejecutar el Proyecto
+## 🚀 Cómo Ejecutar el Proyecto Localmente
 
-Puedes abrir y probar el proyecto de cualquiera de las siguientes formas:
+### 1. Instalar dependencias
+```bash
+npm install
+```
 
-### Opción 1: Abrir directamente el archivo HTML (Método más rápido)
-Haz doble clic sobre el archivo **`index.html`** para abrirlo en tu navegador favorito (Chrome, Edge, Firefox, Brave, Safari).
+### 2. Iniciar en modo Web (Navegador)
+```bash
+npm run web
+```
+Abre automáticamente la aplicación en tu navegador web en `http://localhost:8081`.
 
-### Opción 2: Usar Visual Studio Code Live Server
-Si utilizas **Visual Studio Code**:
-1. Abre la carpeta del proyecto en VS Code.
-2. Haz clic derecho sobre `index.html` y selecciona **"Open with Live Server"**.
+### 3. Iniciar con Expo (Móvil / Web)
+```bash
+npx expo start
+```
+- Presiona **`w`** en la terminal para abrir en el navegador web.
+- O escanea el código QR con la app **Expo Go** en tu teléfono Android o iOS.
 
-### Opción 3: Servidor local simple con Python o Node
-Si deseas servirlo mediante un servidor local:
-- Con **Python 3**:
-  ```bash
-  python -m http.server 3000
-  ```
-- O con **Node.js**:
-  ```bash
-  npx serve .
-  ```
-Luego ingresa a `http://localhost:3000` en tu navegador.
+### 4. Probar la compilación para Vercel (Producción Web)
+```bash
+npm run build:web
+```
+Esto genera la carpeta `dist/` con todos los archivos estáticos listos para desplegarse.
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+## ☁️ Despliegue Automático en Vercel con GitHub Actions
 
-- **HTML5**: Estructura semántica accesible.
-- **CSS3**: Diseño responsivo con Flexbox, Grid y CSS Variables (soporte para móviles y escritorio).
-- **JavaScript (ES6+)**: `async/await`, API `fetch`, manipulación nativa del DOM y gestión de eventos.
+El repositorio cuenta con el workflow [`.github/workflows/deploy-vercel.yml`](.github/workflows/deploy-vercel.yml). Para que el despliegue automático funcione al hacer `push` a `main`, agrega los siguientes secretos en tu repositorio de GitHub (**Settings → Secrets and variables → Actions → Repository secrets**):
+
+1. `VERCEL_TOKEN`: Token personal de Vercel.
+2. `VERCEL_ORG_ID`: ID de tu organización o cuenta en Vercel.
+3. `VERCEL_PROJECT_ID`: ID del proyecto en Vercel.
